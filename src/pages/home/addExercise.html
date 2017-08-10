@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Add New Exercise
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+        <ion-item>
+            <ion-label>Day</ion-label>
+            <ion-select [(ngModel)]="day" sinterface="popover" >
+            <ion-option value="0">Sunday</ion-option>
+            <ion-option value="1">Monday</ion-option>
+            <ion-option value="2">Tuesday</ion-option>
+            <ion-option value="3">Wednesday</ion-option>
+            <ion-option value="4">Thrusday</ion-option>
+            <ion-option value="5">Friday</ion-option>
+            <ion-option value="6">Saturday</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+            <ion-label fixed>Body Part</ion-label>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart"></ion-input>
+        </ion-item>
+
+        <ion-item>
+            <ion-label fixed>Name</ion-label>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label fixed>Set1 </ion-label>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart" placeholder = "weight"></ion-input>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart" placeholder = "reps"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label fixed>Set2 </ion-label>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart" placeholder = "weight"></ion-input>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart" placeholder = "reps"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label fixed>Set3 </ion-label>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart" placeholder = "weight"></ion-input>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart" placeholder = "reps"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label fixed>Set4 </ion-label>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart" placeholder = "weight"></ion-input>
+            <ion-input type="text" [(ngModel)]="exercise.bodyPart" placeholder = "reps"></ion-input>
+        </ion-item>
+        <ion-item>
+            <button ion-button round full>Submit</button>
+        </ion-item>
+  </ion-list>
+</ion-content>

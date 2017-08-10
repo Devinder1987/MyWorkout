@@ -1,3 +1,35 @@
 page-home {
-
+    .header-item {
+        background: rgb(248, 248, 248);
+        .item-inner{
+            border: 0 !important;
+            background: rgb(248, 248, 248);
+        }
+    }
+    .isToday{
+        content: "Today";
+        .datetime-text{
+            display: none
+        }
+    }
+    .enabled-class{
+        border-radius: 4px;
+        color: #fff;
+        background-color: #488aff;
+    }
+    .disabled-class{
+        border-radius: 4px;
+        color: #4e4e4e;
+        background-color: rgba(128, 128, 128, 0.35);
+    }
+    .item-ios{
+        padding: 0;
+    }
+    .toolbar-ios ion-title{
+        padding: 0;
+    }
+    .toolbar-title-ios{
+        text-align: left;
+        padding-left: 10px;
+    }
 }
