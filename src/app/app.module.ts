@@ -3,10 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
+import { WorkoutPlan } from '../pages/workout/workout';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
-import { ModalAddExercise } from '../pages/home/addExercise';
+import { ModalAddExercise } from '../modal/addWorkout/addExercise';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,7 +16,7 @@ import { IonicStorageModule } from '@ionic/storage';
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
+    WorkoutPlan,
     ContactPage,
     HomePage,
     TabsPage,
@@ -30,7 +30,7 @@ import { IonicStorageModule } from '@ionic/storage';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
+    WorkoutPlan,
     ContactPage,
     HomePage,
     TabsPage,

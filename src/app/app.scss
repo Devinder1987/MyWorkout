@@ -14,3 +14,22 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.allign-right-btn {
+    padding-right: 10px;
+    text-align: right;
+}
+.content-md{
+    background: #EFEFEF;
+}
+.center-align{
+    text-align: center;
+}
+.add-btn {
+    .button-inner{
+        font-size: 2.5em;
+        color: chocolate;
+        box-shadow: 3px 3px 5px grey;
+        border-radius: 50%;
+    }
+}

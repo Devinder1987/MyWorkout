@@ -1,11 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, ModalController, ViewController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 
-import { ModalAddExercise } from './addExercise';
-import { Schedule } from './homeJson';
-
-const data = Schedule
+// const data = require('../config/dropDowns.json');
 
 @Component({
   selector: 'page-home',
@@ -20,49 +17,71 @@ export class HomePage {
   name: any
   isDisabled: string
   currentDayNum: number
-  constructor(public navCtrl: NavController, 
-              public storage: Storage,
-              public modalCtrl: ModalController) {
-    this.currentDate = new  Date;
+  days: Array<Object>
+  constructor(public navCtrl: NavController,
+    public storage: Storage) {
+    this.currentDate = new Date;
     this.currentDay = "Today"
     this.exerciseDate = this.currentDate.toISOString();
     this.currentDayNum = new Date(this.currentDate).getDay();
-    this.schedule = data[this.currentDayNum];
+    this.schedule = [];
+    this.setScheduleArr(this.currentDayNum);
     this.isDisabled = "enabled-class";
 
     storage.set('Name', 'Devinder');
+    this.days = [
+      {"value": "0", "text": "Sunday"},
+      {"value": "1", "text": "Monday"},
+      {"value": "2", "text": "Tuesday"},
+      {"value": "3", "text": "Wednesday"},
+      {"value": "4", "text": "Thrusday"},
+      {"value": "5", "text": "Friday"},
+      {"value": "6", "text": "Saturday"}
+    ]
   }
-  findSetElement(arr, outerID, innerID){
-    return arr.find(item => item.id === outerID).sets.find(item => item.id === innerID)
+  setScheduleArr(currentDayNum){
+    let plan = "Intermediate";
+    let fileName = `${plan}_${currentDayNum}`
+    this.storage.get(fileName).then((val) => {
+      this.schedule = val ? val : [];
+    })
   }
-  countDecrease(outerID, innerID, count): void{
-    if(this.findSetElement(this.schedule, outerID, innerID).class !== "disabled-class"){
-      this.findSetElement(this.schedule, outerID, innerID).count =  count > 1 ? count-1 : 15
+  findSetElement(arr, outerID, innerID) {
+    return arr.find(item => item.id === outerID).set.find(item => item.id === innerID)
+  }
+  countDecrease(outerID, innerID, reps): void {
+    if (this.findSetElement(this.schedule, outerID, innerID).status === "Pending") {
+      this.findSetElement(this.schedule, outerID, innerID).reps = reps > 1 ? reps - 1 : 15
     }
   }
-  buttonDisabled(outerID, innerID, count): void{
-    this.findSetElement(this.schedule, outerID, innerID).class = this.findSetElement(this.schedule, outerID, innerID).class === "disabled-class" ? "enabled-class": "disabled-class";
+  buttonDisabled(outerID, innerID, count): void {
+    this.findSetElement(this.schedule, outerID, innerID).status = this.findSetElement(this.schedule, outerID, innerID).status === "Pending" ? "Completed" : "Pending";
   }
   ngOnChanges(changes) {
-      let exerciseDate = new Date(this.exerciseDate).getDate();
-      let exerciseDay = new Date(this.exerciseDate).getDay();
-      this.schedule = data[exerciseDay];
-      this.storage.get('Name').then((val) => {
-        console.log(val)
-        this.name = val;
-      })
-      if(exerciseDate === this.currentDate.getDate()){
-        this.currentDay = "Today"
-      }else if(exerciseDate === this.currentDate.getDate()+1){
-        this.currentDay = "Tomorrow"
-      }else if(exerciseDate === this.currentDate.getDate()-1){
-        this.currentDay = "Yesterday"
-      }else {
-        this.currentDay = "Date"
-      }
+    let exerciseDate = new Date(this.exerciseDate).getDate();
+    let exerciseDay = new Date(this.exerciseDate).getDay();
+    this.setScheduleArr(exerciseDay);
+    this.storage.get('Name').then((val) => {
+      console.log(val)
+      this.name = val;
+    })
+    if (exerciseDate === this.currentDate.getDate()) {
+      this.currentDay = "Today"
+    } else if (exerciseDate === this.currentDate.getDate() + 1) {
+      this.currentDay = "Tomorrow"
+    } else if (exerciseDate === this.currentDate.getDate() - 1) {
+      this.currentDay = "Yesterday"
+    } else {
+      this.currentDay = "Date"
+    }
   }
-  openModal() {
-    let modal = this.modalCtrl.create(ModalAddExercise);
-    modal.present();
+  submit(){
+    let plan = "Intermediate";
+    let date = new Date(this.exerciseDate);
+    let fileName = `${plan}_${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;
+    this.storage.set(fileName, this.schedule);
+  }
+  compareFn(option1: any, option2: any) {
+      return option1.value === option2.value;
   }
 }

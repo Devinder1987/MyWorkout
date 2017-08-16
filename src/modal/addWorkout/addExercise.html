@@ -1,0 +1,99 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>
+            Plan: {{exercisePlan}}
+        </ion-title>
+        <ion-buttons start>
+            <button ion-button (click)="dismiss()">
+        <span ion-text color="primary" showWhen="ios">Cancel</span>
+        <ion-icon name="md-close" showWhen="android,windows"></ion-icon>
+      </button>
+        </ion-buttons>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <section class="section-class">
+        <ion-item>
+            <ion-label>Day</ion-label>
+            <ion-select [(ngModel)]="selectedDay" [compareWith]="compareFn" interface="popover" (ionChange)="dateChange()">
+                <ion-option *ngFor="let day of days" [value]="day">{{day.text}}</ion-option>
+            </ion-select>
+        </ion-item>
+        </section>
+        <div *ngIf="exerciseArr.length !== 0">
+            <section class="section-class" *ngFor="let e of exerciseArr">
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-11>
+                            {{e.name}} ({{e.bodyPart}})
+                        </ion-col>
+                        <ion-col col-1 (click)="removeExercise(e.id)">
+                            <ion-icon name="md-trash"></ion-icon>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+                <ion-item class="grid-input-4">
+                    <ion-label fixed>Weight </ion-label>
+                    <ion-input type="number" [(ngModel)]="e.set[0].weight" placeholder="weight" class="first-input"></ion-input>
+                    <ion-input type="number" [(ngModel)]="e.set[1].weight" placeholder="weight" class="second-input"></ion-input>
+                    <ion-input type="number" [(ngModel)]="e.set[2].weight" placeholder="weight" class="third-input"></ion-input>
+                    <ion-input type="number" [(ngModel)]="e.set[3].weight" placeholder="weight" class="forth-input"></ion-input>
+                </ion-item>
+                <ion-item class="grid-input-4">
+                    <ion-label fixed>Reps </ion-label>
+                    <ion-input type="number" [(ngModel)]="e.set[0].reps" placeholder="reps" class="first-input"></ion-input>
+                    <ion-input type="number" [(ngModel)]="e.set[1].reps" placeholder="reps" class="second-input"></ion-input>
+                    <ion-input type="number" [(ngModel)]="e.set[2].reps" placeholder="reps" class="third-input"></ion-input>
+                    <ion-input type="number" [(ngModel)]="e.set[3].reps" placeholder="reps" class="forth-input"></ion-input>
+                </ion-item>
+                <ion-item style="display: none">
+                </ion-item>
+            </section>
+        </div>
+        <section class="section-class">
+                <ion-item>
+                    <ion-label>Body Part</ion-label>
+                    <ion-select [(ngModel)]="bodyPart" [compareWith]="compareFn" interface="popover">
+                        <ion-option *ngFor="let bodyPart of bodyParts" [value]="bodyPart">{{bodyPart.text}}</ion-option>
+                    </ion-select>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label fixed>Name</ion-label>
+                    <ion-input type="text" [(ngModel)]="exerciseName"></ion-input>
+                </ion-item>
+                <ion-item class="grid-input-2">
+                    <ion-label fixed>Set1 </ion-label>
+                    <ion-input type="number" [(ngModel)]="set1weight" placeholder="weight"></ion-input>
+                    <ion-input type="number" [(ngModel)]="set1reps" placeholder="reps"></ion-input>
+                </ion-item>
+                <ion-item class="grid-input-2">
+                    <ion-label fixed>Set2 </ion-label>
+                    <ion-input type="number" [(ngModel)]="set2weight" placeholder="weight"></ion-input>
+                    <ion-input type="number" [(ngModel)]="set2reps" placeholder="reps"></ion-input>
+                </ion-item>
+                <ion-item class="grid-input-2">
+                    <ion-label fixed>Set3 </ion-label>
+                    <ion-input type="number" [(ngModel)]="set3weight" placeholder="weight"></ion-input>
+                    <ion-input type="number" [(ngModel)]="set3reps" placeholder="reps"></ion-input>
+                </ion-item>
+                <ion-item class="grid-input-2">
+                    <ion-label fixed>Set4 </ion-label>
+                    <ion-input type="number" [(ngModel)]="set4weight" placeholder="weight"></ion-input>
+                    <ion-input type="number" [(ngModel)]="set4reps" placeholder="reps"></ion-input>
+                </ion-item>
+                <ion-grid>
+                    <ion-row>
+                        <ion-col col-6>
+                            <button ion-button round full (tap)="addExercise()">Add</button>
+                        </ion-col>
+                        <ion-col col-6>
+                            <button ion-button round full (tap)="submit()">Submit</button>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+        </section>
+    </ion-list>
+</ion-content>

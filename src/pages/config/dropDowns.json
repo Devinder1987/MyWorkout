@@ -1,0 +1,20 @@
+{
+    "bodyParts": [
+      { "value": "Chest", "text": "Chest" },
+      { "value": "Shoulders", "text": "Shoulders" },
+      { "value": "Back", "text": "Back" },
+      { "value": "Abs", "text": "Abs" },
+      { "value": "Biceps", "text": "Biceps" },
+      { "value": "Triceps", "text": "Triceps" },
+      { "value": "Legs", "text": "Legs" }
+    ],
+    "weekDays": [
+      {"value": "0", "text": "Sunday"},
+      {"value": "1", "text": "Monday"},
+      {"value": "2", "text": "Tuesday"},
+      {"value": "3", "text": "Wednesday"},
+      {"value": "4", "text": "Thrusday"},
+      {"value": "5", "text": "Friday"},
+      {"value": "6", "text": "Saturday"}
+    ]
+}
