@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { AlertController } from 'ionic-angular';
 
 // const data = require('../config/dropDowns.json');
 
@@ -19,7 +20,8 @@ export class HomePage {
   currentDayNum: number
   days: Array<Object>
   constructor(public navCtrl: NavController,
-    public storage: Storage) {
+    public storage: Storage,
+    public alertCtrl: AlertController) {
     this.currentDate = new Date;
     this.currentDay = "Today"
     this.exerciseDate = this.currentDate.toISOString();
@@ -30,21 +32,38 @@ export class HomePage {
 
     storage.set('Name', 'Devinder');
     this.days = [
-      {"value": "0", "text": "Sunday"},
-      {"value": "1", "text": "Monday"},
-      {"value": "2", "text": "Tuesday"},
-      {"value": "3", "text": "Wednesday"},
-      {"value": "4", "text": "Thrusday"},
-      {"value": "5", "text": "Friday"},
-      {"value": "6", "text": "Saturday"}
+      { "value": "0", "text": "Sunday" },
+      { "value": "1", "text": "Monday" },
+      { "value": "2", "text": "Tuesday" },
+      { "value": "3", "text": "Wednesday" },
+      { "value": "4", "text": "Thrusday" },
+      { "value": "5", "text": "Friday" },
+      { "value": "6", "text": "Saturday" }
     ]
   }
-  setScheduleArr(currentDayNum){
+  setScheduleArr(currentDayNum) {
     let plan = "Intermediate";
-    let fileName = `${plan}_${currentDayNum}`
-    this.storage.get(fileName).then((val) => {
-      this.schedule = val ? val : [];
+    let date = new Date(this.exerciseDate);
+    date.setDate(date.getDate() - 7)
+    let fileName = `${plan}_${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;
+    let storageKeys = [];
+    this.storage.keys().then((val) => {
+      storageKeys = val;
+
+      if (!storageKeys.find((val, index, arr) => val === fileName)) {
+        fileName = `${plan}_${currentDayNum}`
+      }
+      this.storage.get(fileName).then((val) => {
+        this.schedule = val ? val : [];
+        let schedule: any
+        for (let exercise = 0; exercise < this.schedule.length; exercise++) {
+          for (let set = 0; set < this.schedule[exercise].set.length; set++) {
+            this.schedule[exercise].set[set].status = "Pending";
+          }
+        }
+      })
     })
+
   }
   findSetElement(arr, outerID, innerID) {
     return arr.find(item => item.id === outerID).set.find(item => item.id === innerID)
@@ -75,13 +94,22 @@ export class HomePage {
       this.currentDay = "Date"
     }
   }
-  submit(){
+  submit() {
     let plan = "Intermediate";
     let date = new Date(this.exerciseDate);
     let fileName = `${plan}_${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;
     this.storage.set(fileName, this.schedule);
+    this.showAlert()
+  }
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Workout over!!',
+      subTitle: 'Your workout is saved. Go and have your protien shake.',
+      buttons: ['OK']
+    });
+    alert.present();
   }
   compareFn(option1: any, option2: any) {
-      return option1.value === option2.value;
+    return option1.value === option2.value;
   }
 }

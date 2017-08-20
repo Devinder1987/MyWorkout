@@ -18,18 +18,25 @@
             <h4>{{exercise.name}} ({{exercise.bodyPart}})</h4>
           </ion-col>
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="exercise.bodyPart != 'Cardio'">
           <ion-col col-3 *ngFor="let set of exercise.set">
             <div *ngIf="set.reps > '0'"><input maxlength="3" size="2" min="1" max="100" type="number" [(ngModel)]="set.weight" placeholder="Kg" /></div>
-            <div><ion-badge item-end (tap)="countDecrease(exercise.id, set.id, set.reps)" (press)="buttonDisabled(exercise.id, set.id, set.reps)"
-              [ngClass]="{'enabled-class': set.status == 'Pending', 'disabled-class': set.status !== 'Pending' }">{{set.reps}}</ion-badge></div>
+            <div>
+              <ion-badge item-end (tap)="countDecrease(exercise.id, set.id, set.reps)" (press)="buttonDisabled(exercise.id, set.id, set.reps)"
+                [ngClass]="{'enabled-class': set.status == 'Pending', 'disabled-class': set.status !== 'Pending' }">{{set.reps}}</ion-badge>
+            </div>
           </ion-col>
+        </ion-row>
+        <ion-row *ngIf="exercise.bodyPart == 'Cardio'">
+          <ion-col col-12>{{exercise.cardio}}</ion-col>
         </ion-row>
       </ion-grid>
     </section>
-    <div class = "allign-right-btn"><button ion-button (click) = "submit()">Submit</button></div>
+    <div class="allign-right-btn"><button ion-button (click)="submit()">Submit</button></div>
   </div>
   <div *ngIf="schedule.length === 0">
-    <section padding> <h3>Please go to plan and add exercise.</h3></section>
+    <section padding>
+      <h3>Please go to plan and add exercise.</h3>
+    </section>
   </div>
 </ion-content>

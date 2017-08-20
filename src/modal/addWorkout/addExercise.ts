@@ -50,6 +50,7 @@ export class ModalAddExercise {
       { "value": "Biceps", "text": "Biceps" },
       { "value": "Triceps", "text": "Triceps" },
       { "value": "Legs", "text": "Legs" },
+      { "value": "Cardio", "text": "Cardio" }
     ]
     this.bodyPart = { "value": "Chest", "text": "Chest" };
     this.exercisePlan = "Intermediate";
@@ -70,6 +71,9 @@ export class ModalAddExercise {
   }
   dateChange() {
     this.setExerciseArr();
+  }
+  onBodyPartSelect() {
+    console.log(this.bodyPart)
   }
   addExercise() {
     let exercise =
