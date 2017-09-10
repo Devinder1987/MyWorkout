@@ -14,7 +14,16 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
+@import "ionic.globals";
+.toolbar-background-ios {
+    background: color($colors, primary);
+}
+.toolbar-title-ios{
+    color: color($colors, light);
+}
+.header-ios{
+    color: color($colors, light);
+}
 .allign-right-btn {
     padding-right: 10px;
     text-align: right;
@@ -26,12 +35,9 @@
     text-align: center;
 }
 .add-btn {
-    .button-inner{
         font-size: 2.5em;
         color: chocolate;
-        box-shadow: 3px 3px 5px grey;
-        border-radius: 50%;
-    }
+        text-shadow: 2px 2px 5px rgba(150, 150, 150, 1)
 }
 .padding-10{
     padding: 10px 10px 0px 10px;
@@ -39,4 +45,31 @@
 .padding-10-left-right{
     padding-left: 10px;
     padding-right: 10px;
+}
+.table{
+    
+    ion-row:nth-child(even) {
+        background: #e6f3ff;
+        border-left: 2px solid #cccccc;
+        border-right: 2px solid #cccccc;
+        border-bottom: 2px solid #cccccc;
+        }
+    ion-row:nth-child(odd) {
+        background: #FFF;
+        border-left: 2px solid #cccccc;
+        border-right: 2px solid #cccccc;
+        border-bottom: 2px solid #cccccc;
+    }
+    ion-col:not(:first-child){
+        border-left: 1px solid #cccccc;
+    }
+    .grid{
+        padding: 0;
+    }
+    [col-8] {
+        background: #c2f0c2;
+    }
+    [col-12] {
+        border-top: 1px solid #cccccc;
+    }
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ViewController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
+import { AlertController } from 'ionic-angular';
 
 @Component({
   templateUrl: 'addExercise.html'
@@ -27,6 +28,7 @@ export class ModalAddExercise {
   constructor(
     public storage: Storage,
     public viewCtrl: ViewController,
+    public alertCtrl: AlertController,
     params: NavParams
   ) {
     let weekDay = params.get('weekDay');
@@ -73,44 +75,64 @@ export class ModalAddExercise {
     this.setExerciseArr();
   }
   onBodyPartSelect() {
+    this.exerciseName = '';
+    if (this.bodyPart.value === "Abs") {
+      this.set1weight = 0;
+      this.set2weight = 0;
+      this.set3weight = 0;
+      this.set4weight = 0;
+    }
     console.log(this.bodyPart)
   }
+  showAlert() {
+    let alert = this.alertCtrl.create({
+      title: 'Warning!!!',
+      subTitle: 'Please add workout name and at least one rep for that workout.',
+      buttons: ['OK']
+    });
+    alert.present();
+  }
   addExercise() {
-    let exercise =
-      {
-        "id": this.exerciseArr.length,
-        "weightUnit": "kg",
-        "bodyPart": this.bodyPart.text,
-        "name": this.exerciseName,
-        "set": [
-          {
-            "id": "1",
-            "weight": this.set1weight,
-            "reps": this.set1reps,
-            "status": "Pending"
-          },
-          {
-            "id": "2",
-            "weight": this.set2weight,
-            "reps": this.set2reps,
-            "status": "Pending"
-          },
-          {
-            "id": "3",
-            "weight": this.set3weight,
-            "reps": this.set3reps,
-            "status": "Pending"
-          },
-          {
-            "id": "4",
-            "weight": this.set4weight,
-            "reps": this.set4reps,
-            "status": "Pending"
-          }
-        ],
-        "cardio": this.cardio
-      }
-    this.exerciseArr.push(exercise);
+    if (!this.exerciseName || !this.set1reps) {
+      this.showAlert()
+    } else {
+      let exercise =
+        {
+          "id": this.exerciseArr.length,
+          "weightUnit": "kg",
+          "bodyPart": this.bodyPart.text,
+          "name": this.exerciseName,
+          "completed": true,
+          "set": [
+            {
+              "id": "1",
+              "weight": this.set1weight,
+              "reps": this.set1reps,
+              "status": "Pending"
+            },
+            {
+              "id": "2",
+              "weight": this.set2weight,
+              "reps": this.set2reps,
+              "status": "Pending"
+            },
+            {
+              "id": "3",
+              "weight": this.set3weight,
+              "reps": this.set3reps,
+              "status": "Pending"
+            },
+            {
+              "id": "4",
+              "weight": this.set4weight,
+              "reps": this.set4reps,
+              "status": "Pending"
+            }
+          ],
+          "cardio": this.cardio
+        }
+      this.exerciseArr.push(exercise);
+    }
   }
   removeExercise(id) {
     let indexVal = this.exerciseArr.findIndex((val, index) => {
@@ -121,9 +143,13 @@ export class ModalAddExercise {
 
   }
   submit() {
-    this.addExercise();
-    let fileName = `${this.exercisePlan}_${this.selectedDay.value}`
-    this.storage.set(fileName, this.exerciseArr);
-    this.dismiss();
+    if (!this.exerciseName || !this.set1reps) {
+      this.showAlert()
+    } else {
+      this.addExercise();
+      let fileName = `${this.exercisePlan}_${this.selectedDay.value}`
+      this.storage.set(fileName, this.exerciseArr);
+      this.dismiss();
+    }
   }
 } 

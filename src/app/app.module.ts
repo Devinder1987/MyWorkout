@@ -3,22 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { WorkoutPlan } from '../pages/workout/workout';
-import { ContactPage } from '../pages/contact/contact';
-import { HomePage } from '../pages/home/home';
+import { WorkoutPlan } from '../pages/plan/workoutPlan';
+import { WorkoutPage } from '../pages/home/workout';
+import { workoutHistory } from '../pages/history/workoutHistory';
 import { ModalAddExercise } from '../modal/addWorkout/addExercise';
 import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     MyApp,
     WorkoutPlan,
-    ContactPage,
-    HomePage,
+    WorkoutPage,
+    workoutHistory,
     TabsPage,
     ModalAddExercise
   ],
@@ -31,14 +32,15 @@ import { IonicStorageModule } from '@ionic/storage';
   entryComponents: [
     MyApp,
     WorkoutPlan,
-    ContactPage,
-    HomePage,
+    WorkoutPage,
+    workoutHistory,
     TabsPage,
     ModalAddExercise
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    DatePipe,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

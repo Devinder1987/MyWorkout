@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Plan
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="addExercise()">
+        <span ion-text color="primary" showWhen="ios">Add</span>
+        <ion-icon class="add-btn" md="md-add-circle" showWhen="android,windows"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="exerciseArr.length !== 0">
+    <section class="section-class" *ngFor="let e of exerciseArr">
+      <div class="padding-10" (click)="addExercise(e.id)">
+        {{e.day}} ({{e.bodyPart}})
+      </div>
+    </section>
+  </div>
+</ion-content>

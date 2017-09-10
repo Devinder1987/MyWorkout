@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      {{currentDay}}
+    </ion-title>
+    <ion-buttons end>
+      <ion-datetime end displayFormat="DDDD, DD/MMM/YYYY" [(ngModel)]="exerciseDate" (ionChange)="ngOnChanges(exerciseDate)"></ion-datetime>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="schedule.length !== 0">
+    <section class="section-class" padding *ngIf="schedule.note">
+      <b>Note:</b> {{schedule.note.value}}
+    </section>
+    <section class="section-class" *ngFor="let exercise of schedule">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-12>
+            <ion-item>
+              <ion-label>
+                <h2>{{exercise.name}} ({{exercise.bodyPart}})</h2>
+              </ion-label>
+              <ion-toggle [(ngModel)]="exercise.completed"></ion-toggle>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="exercise.bodyPart != 'Cardio'">
+          <ion-col *ngFor="let set of exercise.set">
+            <div *ngIf="set.reps > '0'"><input maxlength="3" size="2" min="1" max="100" type="number" [(ngModel)]="set.weight" placeholder="Kg" /></div>
+            <div>
+              <ion-badge item-end (tap)="countDecrease(exercise.id, set.id, set.reps)" (press)="buttonDisabled(exercise.id, set.id, set.reps)"
+                [ngClass]="{'enabled-class': set.status == 'Pending', 'disabled-class': set.status !== 'Pending' }">{{set.reps}}</ion-badge>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngIf="exercise.bodyPart == 'Cardio'">
+          <ion-col col-12>{{exercise.cardio}}</ion-col>
+        </ion-row>
+      </ion-grid>
+    </section>
+    <div class="allign-right-btn"><button ion-button (click)="showSubmitAlert()">Submit</button></div>
+  </div>
+  <div *ngIf="schedule.length === 0">
+    <section padding>
+      <h3>Please go to plan and add exercise.</h3>
+    </section>
+  </div>
+</ion-content>

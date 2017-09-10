@@ -1,0 +1,21 @@
+<ion-header color="primary">
+    <ion-navbar>
+        <ion-label>
+            <ion-title>History</ion-title>
+        </ion-label>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <div *ngIf="historyData.length !== 0" class="table">
+        <ion-grid>
+            <ion-row *ngFor="let history of historyData">
+                <ion-col col-4><b>{{history.date | date : 'EEE, dd-MM-yy'}}</b></ion-col>
+                <ion-col col-4 *ngIf="history.restDay === false">{{history.bodyPart}}</ion-col>
+                <ion-col col-4 *ngIf="history.restDay === false">{{history.plan}}</ion-col>
+                <ion-col col-8 *ngIf="history.restDay === true"> Recovery Day</ion-col>
+                <ion-col col-12 *ngIf="history.restDay === false"> <b>Note:</b> {{history.Note}}</ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
+</ion-content>
