@@ -19,6 +19,7 @@ export class WorkoutPage {
   isDisabled: string
   currentDayNum: number
   days: Array<Object>
+  workoutNote: string
   constructor(public navCtrl: NavController,
     public storage: Storage,
     public alertCtrl: AlertController) {
@@ -30,7 +31,7 @@ export class WorkoutPage {
     this.setScheduleArr(this.currentDayNum);
     this.isDisabled = "enabled-class";
 
-    storage.set('Name', 'Devinder');
+    // storage.clear();
     this.days = [
       { "value": "0", "text": "Sunday" },
       { "value": "1", "text": "Monday" },
@@ -88,10 +89,6 @@ export class WorkoutPage {
     let exerciseDate = new Date(this.exerciseDate).getDate();
     let exerciseDay = new Date(this.exerciseDate).getDay();
     this.setScheduleArr(exerciseDay);
-    this.storage.get('Name').then((val) => {
-      console.log(val)
-      this.name = val;
-    })
     if (exerciseDate === this.currentDate.getDate()) {
       this.currentDay = "Today"
     } else if (exerciseDate === this.currentDate.getDate() + 1) {
@@ -106,9 +103,10 @@ export class WorkoutPage {
     console.log(workoutNote);
     let plan = "Intermediate";
     let date = new Date(this.exerciseDate);
-    let fileName = `${plan}_${date.getDate()}_${date.getMonth()}_${date.getFullYear()}`;
-    this.schedule['note'] = {"value": workoutNote};
+    let fileName = `${plan}_${date.getMonth()}_${date.getDate()}_${date.getFullYear()}`;
+    let noteFileName = `${plan}_note_${date.getMonth()}_${date.getDate()}_${date.getFullYear()}`;
     this.storage.set(fileName, this.schedule);
+    this.storage.set(noteFileName, workoutNote);
   }
   showSubmitAlert() {
     let alert = this.alertCtrl.create({

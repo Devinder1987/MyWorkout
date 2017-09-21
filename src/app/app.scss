@@ -19,10 +19,13 @@
     background: color($colors, primary);
 }
 .toolbar-title-ios{
-    color: color($colors, light);
+    color: color($colors, white);
 }
 .header-ios{
-    color: color($colors, light);
+    color: color($colors, white);
+}
+.text-ios-primary{
+    color: color($colors, white);
 }
 .allign-right-btn {
     padding-right: 10px;

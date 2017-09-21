@@ -9,14 +9,14 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content (swipeDown)="ngOnChanges(exerciseDate)">
   <div *ngIf="schedule.length !== 0">
-    <section class="section-class" padding *ngIf="schedule.note">
-      <b>Note:</b> {{schedule.note.value}}
+    <section class="section-class" padding>
+      <b>Note:</b> {{workoutNote}}
     </section>
     <section class="section-class" *ngFor="let exercise of schedule">
       <ion-grid>
-        <ion-row>
+        <ion-row padding-left>
           <ion-col col-12>
             <ion-item>
               <ion-label>
@@ -26,16 +26,18 @@
             </ion-item>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="exercise.bodyPart != 'Cardio'">
+        <ion-row padding-left *ngIf="exercise.bodyPart != 'Cardio'">
           <ion-col *ngFor="let set of exercise.set">
-            <div *ngIf="set.reps > '0'"><input maxlength="3" size="2" min="1" max="100" type="number" [(ngModel)]="set.weight" placeholder="Kg" /></div>
+            <ion-item *ngIf="set.reps > '0'">
+              <ion-input maxlength="3" size="2" min="1" max="100" type="tel" [(ngModel)]="set.weight" placeholder="Kg"></ion-input>
+            </ion-item>
             <div>
               <ion-badge item-end (tap)="countDecrease(exercise.id, set.id, set.reps)" (press)="buttonDisabled(exercise.id, set.id, set.reps)"
                 [ngClass]="{'enabled-class': set.status == 'Pending', 'disabled-class': set.status !== 'Pending' }">{{set.reps}}</ion-badge>
             </div>
           </ion-col>
         </ion-row>
-        <ion-row *ngIf="exercise.bodyPart == 'Cardio'">
+        <ion-row padding-left *ngIf="exercise.bodyPart == 'Cardio'">
           <ion-col col-12>{{exercise.cardio}}</ion-col>
         </ion-row>
       </ion-grid>

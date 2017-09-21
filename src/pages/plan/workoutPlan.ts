@@ -30,10 +30,14 @@ export class WorkoutPlan {
   }
   addExercise(day?) {
     let modal = this.modalCtrl.create(ModalAddExercise, { weekDay: day ? day : this.weekDay });
+    modal.onDidDismiss(data => {
+     this.setExerciseArr();
+   });
     modal.present();
   }
   setExerciseArr() {
     let exercisePlan = "Intermediate";
+    this.exerciseArr = [];
     for (let day = 0; day < 7; day++) {
       let fileName = `${exercisePlan}_${day}`
       this.storage.get(fileName).then((val) => {
